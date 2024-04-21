@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>tubebuddy</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="heading">Welcome!</div>
+      <h2 style="text-align: center">
+        Enter the URL of the YouTube video to see the sentiments of comments on
+        that video👇
+      </h2>
+      <div style="max-width: 400px; width: 100%">
+        <div
+          style="
+            position: relative;
+            height: 50px;
+            max-width: 380px;
+            background: red;
+            margin: auto;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
+            border-radius: 25px;
+          "
+        >
+          <input
+            id="urlInput"
+            type="text"
+            placeholder="Enter URL..."
+            style="
+              position: absolute;
+              height: 100%;
+              width: 100%;
+              border-radius: 25px;
+              background: #fff;
+              outline: none;
+              border: none;
+              font-size: 18px;
+              padding-left: 20px;
+            "
+          />
+          <button
+            id="searchBtn"
+            style="
+              position: absolute;
+              right: -22px;
+              top: 0;
+              width: 50px;
+              border: 2px solid rgb(1, 191, 113);
+              background: rgb(1, 191, 113);
+              height: 100%;
+              text-align: center;
+              line-height: 50px;
+              color: #fff;
+              font-size: 20px;
+              border-radius: 0 25px 25px 0;
+              cursor: pointer;
+            "
+          >
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+      <div class="charts-container" style="margin-top: 40px">
+        <canvas id="barChart" width="400" height="200"></canvas>
+        <canvas
+          id="pieChart"
+          width="400"
+          height="200"
+          style="margin-top: 40px"
+        ></canvas>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("searchBtn")
+        .addEventListener("click", function () {
+          // Get input value
+          var totalComments = 100;
+          var positiveComments = 28;
+          var negativeComments = 0;
+          var neutralComments = 72;
+
+          // Update charts
+          updateBarChart(
+            totalComments,
+            positiveComments,
+            negativeComments,
+            neutralComments
+          );
+          updatePieChart(positiveComments, negativeComments, neutralComments);
+        });
+
+      function updateBarChart(
+        totalComments,
+        positiveComments,
+        negativeComments,
+        neutralComments
+      ) {
+        document.getElementById("barChart").style.backgroundColor = "white";
+
+        var ctx = document.getElementById("barChart").getContext("2d");
+        var barChart = new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: ["Positive", "Negative", "Neutral"],
+            datasets: [
+              {
+                label: "Sentiment Analysis",
+                data: [positiveComments, negativeComments, neutralComments],
+                backgroundColor: [
+                  "rgba(75, 192, 192, 0.2)",
+                  "rgba(255, 99, 132, 0.2)",
+                  "rgba(54, 162, 235, 0.2)",
+                ],
+                borderColor: [
+                  "rgba(75, 192, 192, 1)",
+                  "rgba(255, 99, 132, 1)",
+                  "rgba(54, 162, 235, 1)",
+                ],
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+      }
+
+      function updatePieChart(
+        positiveComments,
+        negativeComments,
+        neutralComments
+      ) {
+        document.getElementById("pieChart").style.backgroundColor = "white";
+        var ctx = document.getElementById("pieChart").getContext("2d");
+        var pieChart = new Chart(ctx, {
+          type: "pie",
+          data: {
+            labels: ["Positive", "Negative", "Neutral"],
+            datasets: [
+              {
+                label: "Sentiment Analysis",
+                data: [positiveComments, negativeComments, neutralComments],
+                backgroundColor: [
+                  "rgba(75, 192, 192, 0.2)",
+                  "rgba(255, 99, 132, 0.2)",
+                  "rgba(54, 162, 235, 0.2)",
+                ],
+                borderColor: [
+                  "rgba(75, 192, 192, 1)",
+                  "rgba(255, 99, 132, 1)",
+                  "rgba(54, 162, 235, 1)",
+                ],
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+      }
+    </script>
+  </body>
+</html>
